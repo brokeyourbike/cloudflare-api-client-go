@@ -5,6 +5,13 @@
 
 A couple of useful functions for Cloudflare API which are currently not supported by the [official client](https://github.com/cloudflare/cloudflare-go)
 
+## Installation
+
+```bash
+go get github.com/brokeyourbike/cloudflare-go
+```
+
+
 ## Authors
 - [Ivan Stasiuk](https://github.com/brokeyourbike) | [Twitter](https://twitter.com/brokeyourbike) | [LinkedIn](https://www.linkedin.com/in/brokeyourbike) | [stasi.uk](https://stasi.uk)
 
