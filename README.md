@@ -1,4 +1,4 @@
-# cloudflare-go
+# cloudflare-api-client-go
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/665cc995643baf2994b1/maintainability)](https://codeclimate.com/github/brokeyourbike/cloudflare-api-client-go/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/665cc995643baf2994b1/test_coverage)](https://codeclimate.com/github/brokeyourbike/cloudflare-api-client-go/test_coverage)
