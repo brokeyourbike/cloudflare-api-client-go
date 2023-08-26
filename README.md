@@ -1,5 +1,7 @@
 # cloudflare-api-client-go
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/brokeyourbike/cloudflare-api-client-go.svg)](https://pkg.go.dev/github.com/brokeyourbike/cloudflare-api-client-go)
+[![Go Report Card](https://goreportcard.com/badge/github.com/brokeyourbike/cloudflare-api-client-go)](https://goreportcard.com/report/github.com/brokeyourbike/cloudflare-api-client-go)
 [![Maintainability](https://api.codeclimate.com/v1/badges/665cc995643baf2994b1/maintainability)](https://codeclimate.com/github/brokeyourbike/cloudflare-api-client-go/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/665cc995643baf2994b1/test_coverage)](https://codeclimate.com/github/brokeyourbike/cloudflare-api-client-go/test_coverage)
 
