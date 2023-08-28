@@ -18,8 +18,10 @@ type HttpClient interface {
 }
 
 type Client interface {
-	ListZeroTrustUsers(ctx context.Context, accountID string) ([]ZeroTrustUser, error)
+	ListZeroTrustUsers(ctx context.Context) ([]ZeroTrustUser, error)
 }
+
+var _ Client = (*client)(nil)
 
 type client struct {
 	httpClient HttpClient
