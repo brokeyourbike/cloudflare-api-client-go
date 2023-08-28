@@ -10,6 +10,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	"github.com/stretchr/testify/require"
 )
 
 //go:embed testdata/success-one.json
@@ -57,6 +58,8 @@ func TestListAccessUsers_Multiple(t *testing.T) {
 	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp2, nil).Once()
 
 	got, err := client.ListZeroTrustUsers(ctx, "account456")
-	assert.NoError(t, err)
-	assert.Len(t, got, 2)
+	require.NoError(t, err)
+	require.Len(t, got, 2)
+	assert.Equal(t, got[0].Email, "john@doe.com")
+	assert.Equal(t, got[1].Email, "jane@doe.com")
 }
