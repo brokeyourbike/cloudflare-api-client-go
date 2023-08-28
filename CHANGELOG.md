@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.0](https://www.github.com/brokeyourbike/cloudflare-api-client-go/compare/v0.2.0...v0.3.0) (2023-08-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* interface type
+
+### Bug Fixes
+
+* interface type ([a464b45](https://www.github.com/brokeyourbike/cloudflare-api-client-go/commit/a464b4512ec0476c5e32a1935da03378fbdc1765))
+
 ## [0.2.0](https://www.github.com/brokeyourbike/cloudflare-api-client-go/compare/v0.1.0...v0.2.0) (2023-08-28)
 
 
