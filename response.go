@@ -11,7 +11,7 @@ type ZeroTrustUser struct {
 	UID       uuid.UUID `json:"uid"`
 	Name      string    `json:"name"`
 	Email     string    `json:"email"`
-	CreatedAt time.Time `json:"created_at"` // TODO: parse the time
+	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
