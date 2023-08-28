@@ -24,7 +24,7 @@ var successMultiplePage2Response []byte
 
 func TestListAccessUsers_One(t *testing.T) {
 	mockHttpClient := NewMockHttpClient(t)
-	client := NewClient(mockHttpClient, WithToken("token123"))
+	client := NewClient(mockHttpClient, WithToken("token123"), WithBaseURL("https://example.com"))
 
 	ctx := context.Background()
 
