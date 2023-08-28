@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.4.0](https://www.github.com/brokeyourbike/cloudflare-api-client-go/compare/v0.3.0...v0.4.0) (2023-08-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* use default http
+
+### Features
+
+* use default http ([4e6a847](https://www.github.com/brokeyourbike/cloudflare-api-client-go/commit/4e6a847136e350e995736fb4ad70acbd8b1acf60))
+
+
+### Bug Fixes
+
+* 1.21 ([8da77da](https://www.github.com/brokeyourbike/cloudflare-api-client-go/commit/8da77da17e1fa7f934078274b479c96d22360921))
+
 ## [0.3.0](https://www.github.com/brokeyourbike/cloudflare-api-client-go/compare/v0.2.0...v0.3.0) (2023-08-28)
 
 
