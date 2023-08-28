@@ -1,4 +1,4 @@
-package cloudflare
+package cloudflare_test
 
 import (
 	"bytes"
@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/brokeyourbike/cloudflare-api-client-go"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
@@ -23,8 +24,8 @@ var successMultiplePage1Response []byte
 var successMultiplePage2Response []byte
 
 func TestListAccessUsers_One(t *testing.T) {
-	mockHttpClient := NewMockHttpClient(t)
-	client := NewClient(mockHttpClient, WithToken("token123"), WithBaseURL("https://example.com"), WithAccountID("account456"))
+	mockHttpClient := cloudflare.NewMockHttpClient(t)
+	client := cloudflare.NewClient(mockHttpClient, cloudflare.WithToken("token123"), cloudflare.WithBaseURL("https://example.com"), cloudflare.WithAccountID("account456"))
 
 	ctx := context.Background()
 
@@ -40,8 +41,8 @@ func TestListAccessUsers_One(t *testing.T) {
 }
 
 func TestListAccessUsers_Multiple(t *testing.T) {
-	mockHttpClient := NewMockHttpClient(t)
-	client := NewClient(mockHttpClient, WithToken("token123"), WithAccountID("account456"))
+	mockHttpClient := cloudflare.NewMockHttpClient(t)
+	client := cloudflare.NewClient(mockHttpClient, cloudflare.WithToken("token123"), cloudflare.WithAccountID("account456"))
 
 	ctx := context.Background()
 
