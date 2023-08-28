@@ -24,7 +24,7 @@ var successMultiplePage2Response []byte
 
 func TestListAccessUsers_One(t *testing.T) {
 	mockHttpClient := NewMockHttpClient(t)
-	client := NewClient(mockHttpClient, WithToken("token123"), WithBaseURL("https://example.com"))
+	client := NewClient(mockHttpClient, WithToken("token123"), WithBaseURL("https://example.com"), WithAccountID("account456"))
 
 	ctx := context.Background()
 
@@ -34,14 +34,14 @@ func TestListAccessUsers_One(t *testing.T) {
 	}
 	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil).Once()
 
-	got, err := client.ListZeroTrustUsers(ctx, "account456")
+	got, err := client.ListZeroTrustUsers(ctx)
 	assert.NoError(t, err)
 	assert.Len(t, got, 1)
 }
 
 func TestListAccessUsers_Multiple(t *testing.T) {
 	mockHttpClient := NewMockHttpClient(t)
-	client := NewClient(mockHttpClient, WithToken("token123"))
+	client := NewClient(mockHttpClient, WithToken("token123"), WithAccountID("account456"))
 
 	ctx := context.Background()
 
@@ -57,7 +57,7 @@ func TestListAccessUsers_Multiple(t *testing.T) {
 	}
 	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp2, nil).Once()
 
-	got, err := client.ListZeroTrustUsers(ctx, "account456")
+	got, err := client.ListZeroTrustUsers(ctx)
 	require.NoError(t, err)
 	require.Len(t, got, 2)
 	assert.Equal(t, got[0].Email, "john@doe.com")

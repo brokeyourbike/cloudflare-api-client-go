@@ -27,3 +27,15 @@ func (w withBaseURL) Apply(c *client) {
 func WithBaseURL(baseUrl string) ClientOption {
 	return withBaseURL{baseUrl: baseUrl}
 }
+
+type withAccountID struct {
+	accountID string
+}
+
+func (w withAccountID) Apply(c *client) {
+	c.accountID = w.accountID
+}
+
+func WithAccountID(accountID string) ClientOption {
+	return withAccountID{accountID: accountID}
+}

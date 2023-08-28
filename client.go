@@ -25,6 +25,7 @@ type client struct {
 	httpClient HttpClient
 	baseUrl    string
 	token      string
+	accountID  string
 }
 
 func NewClient(httpClient HttpClient, opts ...ClientOption) *client {
@@ -43,8 +44,8 @@ func NewClient(httpClient HttpClient, opts ...ClientOption) *client {
 // ListZeroTrustUsers returns the list of zero trust users for an account, automatically handling the pagination.
 //
 // API Reference: https://developers.cloudflare.com/api/operations/zero-trust-users-get-users
-func (c *client) ListZeroTrustUsers(ctx context.Context, accountID string) ([]ZeroTrustUser, error) {
-	r, err := c.fetchZeroTrustUsers(ctx, accountID, 1)
+func (c *client) ListZeroTrustUsers(ctx context.Context) ([]ZeroTrustUser, error) {
+	r, err := c.fetchZeroTrustUsers(ctx, c.accountID, 1)
 	if err != nil {
 		return []ZeroTrustUser{}, fmt.Errorf("cannot fetch users: %w", err)
 	}
@@ -62,7 +63,7 @@ func (c *client) ListZeroTrustUsers(ctx context.Context, accountID string) ([]Ze
 	for page := 2; page <= pages; page++ {
 		page := page
 		g.Go(func() error {
-			r, err := c.fetchZeroTrustUsers(ctx, accountID, page)
+			r, err := c.fetchZeroTrustUsers(ctx, c.accountID, page)
 			if err != nil {
 				return err
 			}
