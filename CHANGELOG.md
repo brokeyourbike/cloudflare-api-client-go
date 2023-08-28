@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.0](https://www.github.com/brokeyourbike/cloudflare-api-client-go/compare/v0.1.0...v0.2.0) (2023-08-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* pass account id as option
+
+### Bug Fixes
+
+* pass account id as option ([cb31e7d](https://www.github.com/brokeyourbike/cloudflare-api-client-go/commit/cb31e7dac20044eb9a44882d2a0d2077ba491b13))
+
 ## 0.1.0 (2023-08-28)
 
 
