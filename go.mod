@@ -1,6 +1,6 @@
 module github.com/brokeyourbike/cloudflare-api-client-go
 
-go 1.19
+go 1.21
 
 require (
 	github.com/google/uuid v1.3.1
