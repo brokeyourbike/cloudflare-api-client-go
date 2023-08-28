@@ -16,11 +16,7 @@ go get github.com/brokeyourbike/cloudflare-api-client-go
 ## Usage
 
 ```go
-client := cloudflare.NewClient(
-	httpClient,
-	cloudflare.WithToken("securetoken"),
-	cloudflare.WithAccountID("00000000-0000-0000-0000-000000000000"),
-)
+client := cloudflare.NewClient("securetoken", "00000000-0000-0000-0000-000000000000")
 
 users, err := client.ListZeroTrustUsers(context.TODO())
 require.NoError(t, err)
