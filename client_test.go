@@ -12,10 +12,16 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-//go:embed testdata/success.json
-var successResponse []byte
+//go:embed testdata/success-one.json
+var successOneResponse []byte
 
-func TestFetchAccessUsers(t *testing.T) {
+//go:embed testdata/success-multiple-page1.json
+var successMultiplePage1Response []byte
+
+//go:embed testdata/success-multiple-page2.json
+var successMultiplePage2Response []byte
+
+func TestListAccessUsers_One(t *testing.T) {
 	mockHttpClient := NewMockHttpClient(t)
 	client := NewClient(mockHttpClient, WithToken("token123"))
 
@@ -23,11 +29,34 @@ func TestFetchAccessUsers(t *testing.T) {
 
 	resp := &http.Response{
 		StatusCode: 200,
-		Body:       io.NopCloser(bytes.NewReader(successResponse)),
+		Body:       io.NopCloser(bytes.NewReader(successOneResponse)),
 	}
-	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil)
+	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil).Once()
 
-	got, err := client.FetchZeroTrustUsers(ctx, "account456", 1)
+	got, err := client.ListZeroTrustUsers(ctx, "account456")
 	assert.NoError(t, err)
-	assert.Len(t, got.Result, 1)
+	assert.Len(t, got, 1)
+}
+
+func TestListAccessUsers_Multiple(t *testing.T) {
+	mockHttpClient := NewMockHttpClient(t)
+	client := NewClient(mockHttpClient, WithToken("token123"))
+
+	ctx := context.Background()
+
+	resp1 := &http.Response{
+		StatusCode: 200,
+		Body:       io.NopCloser(bytes.NewReader(successMultiplePage1Response)),
+	}
+	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Twice().Return(resp1, nil).Once()
+
+	resp2 := &http.Response{
+		StatusCode: 200,
+		Body:       io.NopCloser(bytes.NewReader(successMultiplePage2Response)),
+	}
+	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp2, nil).Once()
+
+	got, err := client.ListZeroTrustUsers(ctx, "account456")
+	assert.NoError(t, err)
+	assert.Len(t, got, 2)
 }

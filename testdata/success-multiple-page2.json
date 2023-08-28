@@ -1,0 +1,26 @@
+{
+    "errors": [],
+    "messages": [],
+    "result": [
+        {
+            "access_seat": false,
+            "active_device_count": 2,
+            "created_at": "2014-01-01T05:20:00.12345Z",
+            "email": "jane@doe.com",
+            "gateway_seat": false,
+            "id": "a36558ef-7f22-402d-87ea-40a1d39d7ffc",
+            "last_successful_login": "2020-07-01T05:20:00Z",
+            "name": "Jane Doe",
+            "seat_uid": null,
+            "uid": null,
+            "updated_at": "2014-01-01T05:20:00.12345Z"
+        }
+    ],
+    "success": true,
+    "result_info": {
+        "count": 1,
+        "page": 2,
+        "per_page": 1,
+        "total_count": 2
+    }
+}

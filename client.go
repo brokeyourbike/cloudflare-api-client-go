@@ -6,6 +6,9 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"sync"
+
+	"golang.org/x/sync/errgroup"
 )
 
 const defaultBaseURL = "https://api.cloudflare.com/client/v4"
@@ -15,7 +18,7 @@ type HttpClient interface {
 }
 
 type Client interface {
-	FetchZeroTrustUsers(ctx context.Context, accountID string, page int) (data FetchZeroTrustUsersResponse, err error)
+	ListZeroTrustUsers(ctx context.Context, accountID string) ([]ZeroTrustUser, error)
 }
 
 type client struct {
@@ -37,10 +40,49 @@ func NewClient(httpClient HttpClient, opts ...ClientOption) *client {
 	return c
 }
 
-// FetchZeroTrustUsers returns the list of zero trust users for an account.
+// ListZeroTrustUsers returns the list of zero trust users for an account, automatically handling the pagination.
 //
 // API Reference: https://developers.cloudflare.com/api/operations/zero-trust-users-get-users
-func (c *client) FetchZeroTrustUsers(ctx context.Context, accountID string, page int) (data FetchZeroTrustUsersResponse, err error) {
+func (c *client) ListZeroTrustUsers(ctx context.Context, accountID string) ([]ZeroTrustUser, error) {
+	r, err := c.fetchZeroTrustUsers(ctx, accountID, 1)
+	if err != nil {
+		return []ZeroTrustUser{}, fmt.Errorf("cannot fetch users: %w", err)
+	}
+
+	if r.ResultInfo.TotalCount == r.ResultInfo.Count {
+		return r.Result, nil
+	}
+
+	pages := r.ResultInfo.TotalCount / r.ResultInfo.PerPage
+	users := r.Result
+
+	mu := sync.Mutex{}
+	g, ctx := errgroup.WithContext(ctx)
+
+	for page := 2; page <= pages; page++ {
+		page := page
+		g.Go(func() error {
+			r, err := c.fetchZeroTrustUsers(ctx, accountID, page)
+			if err != nil {
+				return err
+			}
+
+			mu.Lock()
+			defer mu.Unlock()
+
+			users = append(users, r.Result...)
+			return nil
+		})
+	}
+
+	if err := g.Wait(); err != nil {
+		return users, err
+	}
+
+	return users, nil
+}
+
+func (c *client) fetchZeroTrustUsers(ctx context.Context, accountID string, page int) (data FetchZeroTrustUsersResponse, err error) {
 	url := fmt.Sprintf("%s/accounts/%s/access/users", c.baseUrl, accountID)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
