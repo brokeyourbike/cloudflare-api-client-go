@@ -1,41 +1,19 @@
 package cloudflare
 
-type ClientOption interface {
-	Apply(*client)
+import (
+	"strings"
+)
+
+// WithHTTPClient sets the HTTP client for the Cloudflare API client.
+func WithHTTPClient(c HttpClient) ClientOption {
+	return func(target *client) {
+		target.httpClient = c
+	}
 }
 
-type withToken struct {
-	token string
-}
-
-func (w withToken) Apply(c *client) {
-	c.token = w.token
-}
-
-func WithToken(token string) ClientOption {
-	return withToken{token: token}
-}
-
-type withBaseURL struct {
-	baseUrl string
-}
-
-func (w withBaseURL) Apply(c *client) {
-	c.baseUrl = w.baseUrl
-}
-
+// WithBaseURL sets the base URL for the Cloudflare API client.
 func WithBaseURL(baseUrl string) ClientOption {
-	return withBaseURL{baseUrl: baseUrl}
-}
-
-type withAccountID struct {
-	accountID string
-}
-
-func (w withAccountID) Apply(c *client) {
-	c.accountID = w.accountID
-}
-
-func WithAccountID(accountID string) ClientOption {
-	return withAccountID{accountID: accountID}
+	return func(target *client) {
+		target.baseUrl = strings.TrimSuffix(baseUrl, "/")
+	}
 }

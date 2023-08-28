@@ -30,14 +30,19 @@ type client struct {
 	accountID  string
 }
 
-func NewClient(httpClient HttpClient, opts ...ClientOption) *client {
+// ClientOption is a function that configures a Client.
+type ClientOption func(*client)
+
+func NewClient(token, accountID string, opts ...ClientOption) *client {
 	c := &client{
-		httpClient: httpClient,
+		httpClient: http.DefaultClient,
 		baseUrl:    defaultBaseURL,
+		token:      token,
+		accountID:  accountID,
 	}
 
-	for _, o := range opts {
-		o.Apply(c)
+	for _, option := range opts {
+		option(c)
 	}
 
 	return c
@@ -86,7 +91,7 @@ func (c *client) ListZeroTrustUsers(ctx context.Context) ([]ZeroTrustUser, error
 }
 
 func (c *client) fetchZeroTrustUsers(ctx context.Context, accountID string, page int) (data FetchZeroTrustUsersResponse, err error) {
-	url := fmt.Sprintf("%s/accounts/%s/access/users", c.baseUrl, accountID)
+	url := fmt.Sprintf("%s/accounts/%s/access/users", c.token, accountID)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {

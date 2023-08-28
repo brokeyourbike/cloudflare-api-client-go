@@ -25,7 +25,7 @@ var successMultiplePage2Response []byte
 
 func TestListAccessUsers_One(t *testing.T) {
 	mockHttpClient := cloudflare.NewMockHttpClient(t)
-	client := cloudflare.NewClient(mockHttpClient, cloudflare.WithToken("token123"), cloudflare.WithBaseURL("https://example.com"), cloudflare.WithAccountID("account456"))
+	client := cloudflare.NewClient("token123", "account456", cloudflare.WithHTTPClient(mockHttpClient), cloudflare.WithBaseURL("https://c.om"))
 
 	ctx := context.Background()
 
@@ -42,7 +42,7 @@ func TestListAccessUsers_One(t *testing.T) {
 
 func TestListAccessUsers_Multiple(t *testing.T) {
 	mockHttpClient := cloudflare.NewMockHttpClient(t)
-	client := cloudflare.NewClient(mockHttpClient, cloudflare.WithToken("token123"), cloudflare.WithAccountID("account456"))
+	client := cloudflare.NewClient("token123", "account456", cloudflare.WithHTTPClient(mockHttpClient))
 
 	ctx := context.Background()
 
