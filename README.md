@@ -13,6 +13,19 @@ A couple of useful functions for Cloudflare API which are currently not supporte
 go get github.com/brokeyourbike/cloudflare-api-client-go
 ```
 
+## Usage
+
+```go
+client := cloudflare.NewClient(
+		httpClient,
+		cloudflare.WithToken(cfg.Cloudflare.Token),
+		cloudflare.WithAccountID(cfg.Cloudflare.AccountID),
+)
+
+users, err := client.ListZeroTrustUsers(context.TODO())
+require.NoError(t, err)
+```
+
 ## Authors
 - [Ivan Stasiuk](https://github.com/brokeyourbike) | [Twitter](https://twitter.com/brokeyourbike) | [LinkedIn](https://www.linkedin.com/in/brokeyourbike) | [stasi.uk](https://stasi.uk)
 
