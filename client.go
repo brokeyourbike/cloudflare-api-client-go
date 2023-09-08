@@ -91,7 +91,7 @@ func (c *client) ListZeroTrustUsers(ctx context.Context) ([]ZeroTrustUser, error
 }
 
 func (c *client) fetchZeroTrustUsers(ctx context.Context, accountID string, page int) (data FetchZeroTrustUsersResponse, err error) {
-	url := fmt.Sprintf("%s/accounts/%s/access/users", c.token, accountID)
+	url := fmt.Sprintf("%s/accounts/%s/access/users", c.baseUrl, accountID)
 
 	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
