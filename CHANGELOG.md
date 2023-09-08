@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.5.0](https://www.github.com/brokeyourbike/cloudflare-api-client-go/compare/v0.4.0...v0.5.0) (2023-09-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* use base url
+
+### Bug Fixes
+
+* use base url ([d1935c1](https://www.github.com/brokeyourbike/cloudflare-api-client-go/commit/d1935c12a9c329b3700ab511e6d87aa79caa140b))
+
 ## [0.4.0](https://www.github.com/brokeyourbike/cloudflare-api-client-go/compare/v0.3.0...v0.4.0) (2023-08-28)
 
 
