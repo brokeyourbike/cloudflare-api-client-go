@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.5.1](https://www.github.com/brokeyourbike/cloudflare-api-client-go/compare/v0.5.0...v0.5.1) (2023-12-10)
+
+
+### Bug Fixes
+
+* update deps ([e222005](https://www.github.com/brokeyourbike/cloudflare-api-client-go/commit/e2220053101238ab4352c407056abf459fa5452c))
+
 ## [0.5.0](https://www.github.com/brokeyourbike/cloudflare-api-client-go/compare/v0.4.0...v0.5.0) (2023-09-08)
 
 
