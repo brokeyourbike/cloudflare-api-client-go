@@ -5,10 +5,10 @@
     "image": "mcr.microsoft.com/devcontainers/go:1-1.21-bookworm",
     "features": {
         "ghcr.io/brokeyourbike/devcontainer-features/staticcheck:0": {
-            "version": "2023.1.5"
+            "version": "2023.1.6"
         },
         "ghcr.io/brokeyourbike/devcontainer-features/mockery-go:0": {
-            "version": "2.33.0"
+            "version": "2.38.0"
         }
     },
     "customizations": {
