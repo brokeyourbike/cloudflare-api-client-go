@@ -23,6 +23,15 @@ var successMultiplePage1Response []byte
 //go:embed testdata/success-multiple-page2.json
 var successMultiplePage2Response []byte
 
+func TestListAccessUsers_RequestErr(t *testing.T) {
+	mockHttpClient := cloudflare.NewMockHttpClient(t)
+	client := cloudflare.NewClient("token123", "account456", cloudflare.WithHTTPClient(mockHttpClient))
+
+	_, err := client.ListZeroTrustUsers(nil) //lint:ignore SA1012 testing failure
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "cannot create request")
+}
+
 func TestListAccessUsers_One(t *testing.T) {
 	mockHttpClient := cloudflare.NewMockHttpClient(t)
 	client := cloudflare.NewClient("token123", "account456", cloudflare.WithHTTPClient(mockHttpClient), cloudflare.WithBaseURL("https://c.om"))
