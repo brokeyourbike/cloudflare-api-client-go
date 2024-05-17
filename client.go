@@ -27,17 +27,19 @@ type client struct {
 	httpClient HttpClient
 	baseUrl    string
 	token      string
+	zoneID     string
 	accountID  string
 }
 
 // ClientOption is a function that configures a Client.
 type ClientOption func(*client)
 
-func NewClient(token, accountID string, opts ...ClientOption) *client {
+func NewClient(token, zoneID, accountID string, opts ...ClientOption) *client {
 	c := &client{
 		httpClient: http.DefaultClient,
 		baseUrl:    defaultBaseURL,
 		token:      token,
+		zoneID:     zoneID,
 		accountID:  accountID,
 	}
 
@@ -46,6 +48,33 @@ func NewClient(token, accountID string, opts ...ClientOption) *client {
 	}
 
 	return c
+}
+
+// Purge All Cached Content.
+//
+// API Reference: https://developers.cloudflare.com/api/operations/zone-purge
+func (c *client) Purge(ctx context.Context) error {
+	url := fmt.Sprintf("%s/client/v4/zones/%s/purge_cache", c.baseUrl, c.zoneID)
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, nil)
+	if err != nil {
+		return fmt.Errorf("cannot create request: %w", err)
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.token))
+
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return fmt.Errorf("cannot send request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("unexpected status code: %d", resp.StatusCode)
+	}
+
+	return nil
 }
 
 // ListZeroTrustUsers returns the list of zero trust users for an account, automatically handling the pagination.
@@ -93,7 +122,7 @@ func (c *client) ListZeroTrustUsers(ctx context.Context) ([]ZeroTrustUser, error
 func (c *client) fetchZeroTrustUsers(ctx context.Context, accountID string, page int) (data FetchZeroTrustUsersResponse, err error) {
 	url := fmt.Sprintf("%s/accounts/%s/access/users", c.baseUrl, accountID)
 
-	req, err := http.NewRequestWithContext(ctx, "GET", url, nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return data, fmt.Errorf("cannot create request: %w", err)
 	}

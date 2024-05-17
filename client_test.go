@@ -25,7 +25,7 @@ var successMultiplePage2Response []byte
 
 func TestListAccessUsers_RequestErr(t *testing.T) {
 	mockHttpClient := cloudflare.NewMockHttpClient(t)
-	client := cloudflare.NewClient("token123", "account456", cloudflare.WithHTTPClient(mockHttpClient))
+	client := cloudflare.NewClient("token123", "zone1", "account456", cloudflare.WithHTTPClient(mockHttpClient))
 
 	_, err := client.ListZeroTrustUsers(nil) //lint:ignore SA1012 testing failure
 	require.Error(t, err)
@@ -34,7 +34,7 @@ func TestListAccessUsers_RequestErr(t *testing.T) {
 
 func TestListAccessUsers_One(t *testing.T) {
 	mockHttpClient := cloudflare.NewMockHttpClient(t)
-	client := cloudflare.NewClient("token123", "account456", cloudflare.WithHTTPClient(mockHttpClient), cloudflare.WithBaseURL("https://c.om"))
+	client := cloudflare.NewClient("token123", "zone1", "account456", cloudflare.WithHTTPClient(mockHttpClient), cloudflare.WithBaseURL("https://c.om"))
 
 	ctx := context.Background()
 
@@ -51,7 +51,7 @@ func TestListAccessUsers_One(t *testing.T) {
 
 func TestListAccessUsers_Multiple(t *testing.T) {
 	mockHttpClient := cloudflare.NewMockHttpClient(t)
-	client := cloudflare.NewClient("token123", "account456", cloudflare.WithHTTPClient(mockHttpClient))
+	client := cloudflare.NewClient("token123", "zone1", "account456", cloudflare.WithHTTPClient(mockHttpClient))
 
 	ctx := context.Background()
 
@@ -72,4 +72,30 @@ func TestListAccessUsers_Multiple(t *testing.T) {
 	require.Len(t, got, 2)
 	assert.Equal(t, got[0].Email, "john@doe.com")
 	assert.Equal(t, got[1].Email, "jane@doe.com")
+}
+
+func TestPurge(t *testing.T) {
+	mockHttpClient := cloudflare.NewMockHttpClient(t)
+	client := cloudflare.NewClient("token123", "zone1", "account456", cloudflare.WithHTTPClient(mockHttpClient), cloudflare.WithBaseURL("https://c.om"))
+
+	ctx := context.Background()
+
+	resp := &http.Response{StatusCode: 200, Body: io.NopCloser(bytes.NewReader(nil))}
+	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil).Once()
+
+	err := client.Purge(ctx)
+	assert.NoError(t, err)
+}
+
+func TestPurge_Err(t *testing.T) {
+	mockHttpClient := cloudflare.NewMockHttpClient(t)
+	client := cloudflare.NewClient("token123", "zone1", "account456", cloudflare.WithHTTPClient(mockHttpClient), cloudflare.WithBaseURL("https://c.om"))
+
+	ctx := context.Background()
+
+	resp := &http.Response{StatusCode: 400, Body: io.NopCloser(bytes.NewReader(nil))}
+	mockHttpClient.On("Do", mock.AnythingOfType("*http.Request")).Return(resp, nil).Once()
+
+	err := client.Purge(ctx)
+	assert.ErrorContains(t, err, "unexpected status code")
 }
