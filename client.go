@@ -18,6 +18,7 @@ type HttpClient interface {
 }
 
 type Client interface {
+	Purge(ctx context.Context) error
 	ListZeroTrustUsers(ctx context.Context) ([]ZeroTrustUser, error)
 }
 
