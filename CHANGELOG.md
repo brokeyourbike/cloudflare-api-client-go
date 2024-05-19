@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.6.1](https://www.github.com/brokeyourbike/cloudflare-api-client-go/compare/v0.6.0...v0.6.1) (2024-05-19)
+
+
+### Bug Fixes
+
+* purge in interface ([ec1fe53](https://www.github.com/brokeyourbike/cloudflare-api-client-go/commit/ec1fe531f9775dad1ad177fde94eb0168cb0d0fd))
+
 ## [0.6.0](https://www.github.com/brokeyourbike/cloudflare-api-client-go/compare/v0.5.1...v0.6.0) (2024-05-17)
 
 
